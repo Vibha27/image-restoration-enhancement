@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Image Upload</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css')}}">
+
+  </head>
+  <body >
+    <!-- As a link -->
+    <nav class="navbar ">
+        <a class="navbar-brand" href="/">Image restoration and enhancement</a>
+    </nav>
+    <div class="p-2 mr-1">
+    
+      <div class="row justify-content-center align-items-center draw-area">
+        <button class="operations-btn btn btn-small p-2 m-2">High Resolution</button>
+        <button class="operations-btn btn btn-small p-2 m-2">Color image</button>
+        <button class="operations-btn btn btn-small p-2 m-2">Inpaint</button>
+        <button class="operations-btn btn btn-small p-2 m-2">Dehaze</button><br>
+        <button class="operations-btn btn btn-small p-2 m-2">Download</button>
+      </div>
+      <div class="row">
+
+          {% if filename %}
+          
+            <img src="{{ url_for('send_file', filename=filename) }}" class="fluid col-12 col-md-4"/> 
+          
+          {% else %}
+          <div class="col-12 col-md-4"><h6>no image for whatever reason</h6></div>
+          {% endif %}
+        
+          <canvas id="canvas" class="col-12 col-md-4 "
+          style="border:4px solid; background-color: black; border-radius: 10px; cursor: crosshair;"></canvas>
+          <!-- <button type="button" class="btn btn-info" id="clearButton" onclick="erase()">Clear</button> -->
+
+          <div class="col-12 col-md-4 mt-5 button-area">
+            <button class="operations-btn btn btn-block ">High Resolution</button>
+            <button class="operations-btn btn btn-block ">Color image</button>
+            <button class="operations-btn btn btn-block " id="inpaint">Inpaint</button>
+            <button class="operations-btn btn btn-block ">Dehaze</button><br>
+            <button class="operations-btn btn btn-block ">Download</button>
+          </div>
+
+        <div class="col-12 col-md-4">
+          <h3>Output</h3>
+          <img class="img-responsive output-image" width="100%" src="{{ url_for('static', filename='images/out-dehaze.jpeg') }}"/>
+        </div>
+      </div>
+    </div>
+    
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+    <script src=" {{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+      $(document).ready(function(){
+        $(".draw-area").hide();
+        $("#canvas").hide();
+          $("#inpaint").click(function(){
+             console.log("huh")
+              $(".draw-area").toggle();
+              $("#canvas").toggle();
+              $(".button-area").addClass('d-none');
+          });
+      });
+      </script>
+  </body>
+</html>

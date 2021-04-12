@@ -1,0 +1,66 @@
+html,body{
+    overflow-x: hidden;
+    max-width: 100%;
+}
+.navbar {
+    background-color: #494960 ;
+    
+}
+.navbar-brand {
+    color : white;
+    margin: auto;
+}
+.carousel{
+    width: 100%;
+    min-height: auto;
+    background-color: rgb(104,119,150);
+    text-align: center;
+}
+.images {
+    width: auto;
+    height: 350px;
+    object-fit: cover;
+    opacity: 0.9;
+}
+.upload {
+    position: absolute;
+    left : 0;
+    right : 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width : 300px;
+    top: 250px;
+    padding: 5px;
+    background-color: rgb(104,119,150);
+    border-radius: 10px;
+    color: white;
+    font-weight: bolder;
+    display: flex;
+    flex-direction: row;
+}
+.button-div {
+    display: flex;
+    flex-direction: column;
+}
+.output-image{
+    object-fit: cover;
+}
+
+/* .upload-div {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+} */
+.operations-btn {
+    background-color: rgb(116, 143, 143);
+    color: white;
+}
+
+/* Upload-image page */
+.upload-photo {
+    border: 2px dimgray dotted;
+    padding: 10px;
+    height: 300px;
+}

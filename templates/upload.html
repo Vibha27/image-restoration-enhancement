@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css')}}">
+
+    <title>Uplaod Image</title>
+</head>
+<body>
+    <div>
+        <nav class="navbar text-capitalize text-center">
+            <a class="navbar-brand" href="/">Image restoration and enhancement</a>
+        </nav>
+    
+        <div class="container">
+            
+            {% if filename %}
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-md-4">
+                    <h4 class="mt-5">Your Image</h4>
+                    <img src="{{ url_for('send_file', filename=filename) }}" width="280px"
+                    height="280px" class="img-fluid "/>
+                     <!-- If inpainting is selected then show canvas  -->
+                     
+                </div>
+                {% if pathname == 'inpaint' %}
+                <div class="col-12 col-md-4">
+
+                     <h5 class="mt-5">Draw mask here</h5>
+                        <canvas id="canvas" class=""
+                        style="border:2px solid; border-radius: 10px; cursor: crosshair;"></canvas>
+                </div>
+                {% endif %}
+                
+                <div class="col-12 col-md-4"> 
+                    <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
+                    <img src="{{ url_for('static', filename='images/colorization-output.png') }}" 
+                    width="280px"
+                    height="280px"
+                    class="img-fluid "/> 
+                    <!-- <br><button class="btn btn-small btn-light">Save</button> -->
+                    
+                </div>
+            </div>
+            {% else %}
+            <h5 class="mt-5">You are about to upload photos for 
+                {% if pathname %}<em><b>{{pathname}}</b></em>{% endif %}. Your photos will be securely stored and kept private.</h5>
+            
+            <form method="POST" action="" enctype="multipart/form-data" class="upload-photo">
+
+                <div class="upload">
+                    <input type="file" name="file" class="file" accept=".png,.jpeg,.jpg"/>
+                    <input type="submit" class="btn btn-small" value="submit"/>
+                </div>
+    
+            </form>
+        
+            {% endif %}
+        
+        </div>
+    </div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+    <script src=" {{ url_for('static', filename='js/script.js') }}"></script>
+    
+</body>
+</html>
