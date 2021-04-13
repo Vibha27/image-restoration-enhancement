@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request, redirect, abort, sen
 app = Flask(__name__)
 app.config['UPLOAD_EXTENSIONS'] = ['.jpeg', '.png', '.jpg']
 app.config['UPLOAD_PATH'] = 'static/uploads'
+app.config['OUTPUT_PATH'] = r"/content/static/OUTPUTS"
 
 @app.route('/')
 def index() :
@@ -12,7 +13,8 @@ def index() :
 @app.route('/upload-image/<pathname>')
 def uplaod_image(pathname) :
     path = request.path
-    return render_template('upload.html',pathname = path.split('/')[2])
+    module_name = path.split('/')[-1]
+    return render_template('upload.html', pathname=module_name)
 
 @app.route('/upload-image/<pathname>', methods=['POST'])
 def upload_files(pathname):
@@ -29,6 +31,12 @@ def upload_files(pathname):
 @app.route('/uploads/<filename>')
 def send_file(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
+
+@app.route('/uploads/<filename>')
+def send_output_file(name_file):
+    print(name_file)
+    return send_from_directory(app.config['OUTPUT_PATH'], name_file)
+
 
 @app.route('/upload-image/<pathname>/<filename>')
 def uploaded_file(pathname,filename):
