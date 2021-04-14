@@ -28,14 +28,6 @@
                      <!-- If inpainting is selected then show canvas  -->
                      
                 </div>
-                {% if pathname == 'inpaint' %}
-                <div class="col-12 col-md-4">
-
-                     <h5 class="mt-5">Draw mask here</h5>
-                        <canvas id="canvas" class=""
-                        style="border:2px solid; border-radius: 10px; cursor: crosshair;"></canvas>
-                </div>
-                {% endif %}
                 
                 <div class="col-12 col-md-4"> 
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
@@ -59,7 +51,16 @@
                 </div>
     
             </form>
-        
+            
+            {% if pathname == 'inpaint' %}
+            <div class="col-12 col-md-4">
+
+                 <h5 class="mt-5">Draw mask here</h5>
+                    <canvas id="canvas" class=""
+                    style="border:2px solid; border-radius: 10px; cursor: crosshair;"></canvas>
+            </div>
+            {% endif %}
+            
             {% endif %}
         
         </div>
