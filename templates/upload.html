@@ -26,13 +26,18 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-12 col-md-4">
                     <h4 class="mt-5">Your Image</h4>
-                    <img src="{{ url_for('send_file', filename=filename) }}" class="img-fluid " />
-                    <!-- If inpainting is selected then show canvas  -->
+                    <img src="{{ url_for('send_file', filename=filename) }}" class="img-fluid "/>
+                     <!-- If inpainting is selected then show canvas  -->
+                     
                 </div>
-
-                <div class="col-12 col-md-4">
+                <input type="hidden" id="payload" name="payload" value="x">
+                <div class="col-12 col-md-4"> 
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
-                    <img src="{{ url_for('static',filename='uploads/'+'out_'+filename)}}" class="img-fluid " />
+                    <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
+                    
+                    class="img-fluid "/> 
+                    <!-- <br><button class="btn btn-small btn-light">Save</button> -->
+                    
                 </div>
                 <!-- <br><button class="btn btn-small btn-light">Save</button> -->
 
@@ -52,11 +57,17 @@
             </form>
 
             {% if pathname == 'inpaint' %}
-            <div class="col-12 col-md-4">
+            <form method="POST" action="" enctype="multipart/form-data" onsubmit="return prepare()" class="upload-photo">
 
-                <h5 class="mt-5">Draw mask here</h5>
-                <canvas id="canvas" class="" style="border:2px solid; border-radius: 10px; cursor: crosshair;"></canvas>
-            </div>
+                <div class="col-12 col-md-4">
+
+                    <h5 class="mt-5">Draw mask here</h5>
+                        <canvas id="canvas" class=""
+                        style="border:2px solid; border-radius: 10px; cursor: crosshair;">
+                        </canvas>
+                    <input type="submit" value="Done" />
+                </div>
+            </form>
             {% endif %}
 
             {% endif %}
@@ -67,7 +78,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <script src=" {{ url_for('static', filename='js/script.js') }}"></script>
-
+    <script type="text/javascript">
+        function prepare() {
+          var canvasObj = document.getElementById("canvas");
+          var img = canvasObj.toDataURL();
+          document.getElementById("payload").value = img;
+          return true;
+        }
+      </script>
+    
 </body>
 
 </html>

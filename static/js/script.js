@@ -116,6 +116,7 @@
 	{
 		canvas.addEventListener( "mousemove", onPaint, false );
 
+		console.log("mousemove func")
 	}, false );
 
 	canvas.addEventListener( "mouseup", function()
