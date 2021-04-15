@@ -41,6 +41,9 @@ def send_output_file(name_file):
     print(name_file)
     return send_from_directory(app.config['OUTPUT_PATH'], name_file)
 
+@app.route('/draw-canvas')
+def canvas() :
+    return render_template('second.html')
 
 @app.route('/upload-image/<pathname>/<filename>')
 def uploaded_file(pathname,filename):

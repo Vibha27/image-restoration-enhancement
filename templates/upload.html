@@ -30,7 +30,6 @@
                      <!-- If inpainting is selected then show canvas  -->
                      
                 </div>
-                <input type="hidden" id="payload" name="payload" value="x">
                 <div class="col-12 col-md-4"> 
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
                     <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
@@ -42,7 +41,7 @@
                 <!-- <br><button class="btn btn-small btn-light">Save</button> -->
 
             </div>
-            {% else %}
+            {% elif pathname == 'inpaint' %}
             <h5 class="mt-5">You are about to upload photos for
                 {% if pathname %}<em><b>{{pathname}}</b></em>{% endif %}. Your photos will be securely stored and kept
                 private.</h5>
@@ -50,41 +49,59 @@
             <form method="POST" action="" enctype="multipart/form-data" class="upload-photo">
 
                 <div class="upload">
-                    <input type="file" name="file" class="file" accept=".png,.jpeg,.jpg" />
+                    <input type="file" name="file" class="" 
+                    onchange="loadFile(event)"
+                    accept=".png,.jpeg,.jpg" />
                     <input type="submit" class="btn btn-small" value="submit" />
                 </div>
 
             </form>
 
-            {% if pathname == 'inpaint' %}
-            <form method="POST" action="" enctype="multipart/form-data" onsubmit="return prepare()" class="upload-photo">
+            <!-- <form method="POST" action="" enctype="multipart/form-data" onsubmit="return prepare()" class="upload-photo"> -->
 
-                <div class="col-12 col-md-4">
+                <!-- <div class="col-12 col-md-4" id="sketch"> -->
 
                     <h5 class="mt-5">Draw mask here</h5>
-                        <canvas id="canvas" class=""
-                        style="border:2px solid; border-radius: 10px; cursor: crosshair;">
-                        </canvas>
-                    <input type="submit" value="Done" />
-                </div>
-            </form>
-            {% endif %}
+                    <canvas id="canvas" width="256" height="256" 
+                    style="float:left;border:8px solid; border-radius: 10px;
+                    "></canvas>
+                    <img id="uploaded_img" />
 
+                    <!-- <input type="submit" value="Done" /> -->
+                <!-- </div> -->
+            <!-- </form> -->
+            {% else %}
+                <h5 class="mt-5">You are about to upload photos for
+                    {% if pathname %}<em><b>{{pathname}}</b></em>{% endif %}. Your photos will be securely stored and kept
+                    private.</h5>
+
+                <form method="POST" action="" enctype="multipart/form-data" class="upload-photo">
+
+                    <div class="upload">
+                        <input type="file" name="file" class="file" 
+                        accept=".png,.jpeg,.jpg" />
+                        <input type="submit" class="btn btn-small" value="submit" />
+                    </div>
+
+                </form>
             {% endif %}
 
         </div>
     </div>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
-    <script src=" {{ url_for('static', filename='js/script.js') }}"></script>
     <script type="text/javascript">
-        function prepare() {
-          var canvasObj = document.getElementById("canvas");
-          var img = canvasObj.toDataURL();
-          document.getElementById("payload").value = img;
-          return true;
-        }
+        
+        // function prepare() {
+        //   var canvasObj = document.getElementById("canvas");
+        //   var img = canvasObj.toDataURL();
+        //   document.getElementById("payload").value = img;
+        //   console.log(img)
+        //   return true;
+        // }
       </script>
     
 </body>
