@@ -23,17 +23,15 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-12 col-md-4">
                     <h4 class="mt-5">Your Image</h4>
-                    <img src="{{ url_for('send_file', filename=filename) }}" width="280px"
-                    height="280px" class="img-fluid "/>
+                    <img src="{{ url_for('send_file', filename=filename) }}" class="img-fluid "/>
                      <!-- If inpainting is selected then show canvas  -->
                      
                 </div>
                 <input type="hidden" id="payload" name="payload" value="x">
                 <div class="col-12 col-md-4"> 
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
-                    <img src="{{ url_for('send_output_file', filename=filename) }}" 
-                    width="280px"
-                    height="280px"
+                    <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
+                    
                     class="img-fluid "/> 
                     <!-- <br><button class="btn btn-small btn-light">Save</button> -->
                     
