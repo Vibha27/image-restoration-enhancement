@@ -19,12 +19,16 @@ def uplaod_image(pathname) :
 @app.route('/upload-image/<pathname>', methods=['POST'])
 def upload_files(pathname):
     uploaded_file = request.files['file']
+    # output_file = request.files['file']
     filename = uploaded_file.filename
+    # image = request.form["payload"].split(",")[1]
+    # print(image)
     if filename != '':
         file_ext = os.path.splitext(filename)[1]
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] :
             abort(400)
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))
+        # output_file.save(os.path.join(app.config['OUTPUT_PATH'], filename))
         # return filename
         return redirect(url_for('uploaded_file', pathname=pathname,filename=filename))
 
