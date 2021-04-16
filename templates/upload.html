@@ -34,42 +34,47 @@
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
                     <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
                     
-                    class="img-fluid "/> 
+                    class="img-fluid " id="output_img"/> 
                     <!-- <br><button class="btn btn-small btn-light">Save</button> -->
                     
                 </div>
                 <!-- <br><button class="btn btn-small btn-light">Save</button> -->
-
+                <button id="download" onclick="download()">Download</button>
             </div>
             {% elif pathname == 'inpaint' %}
             <h5 class="mt-5">You are about to upload photos for
                 {% if pathname %}<em><b>{{pathname}}</b></em>{% endif %}. Your photos will be securely stored and kept
                 private.</h5>
 
-            <form method="POST" action="" enctype="multipart/form-data" class="upload-photo">
+            <form method="POST" action="" enctype="multipart/form-data" class="upload-inpaint-photo">
 
-                <div class="upload">
+                <div class="upload" id="inpaint-uplaod">
                     <input type="file" name="file" class="" 
                     onchange="loadFile(event)"
                     accept=".png,.jpeg,.jpg" />
-                    <input type="submit" class="btn btn-small" value="submit" />
+                    <input type="hidden" id="payload" name="payload" value="x">
+                    <input type="submit" class="btn btn-small" value="Apply Model" />
                 </div>
+                <div class="row" id="inpaint-mask" style="visibility: hidden;">
+
+                    <div class="mr-5">
+                        <h5 class="mt-5">Your Original Image</h5>
+                        <img id="uploaded_img" />
+                    </div>
+                    <div >
+                        <h5 class="mt-5" id="mask-title">Draw mask here</h5>
+                        <canvas id="canvas" width="256" height="256" 
+                        style="border:5px solid; border-radius: 5px; 
+                        ">
+                        </canvas>
+                        <input type="button" value="clear" onclick="clear()"/>
+                        <input type="submit" class="btn btn-small" value="Apply Model" />
+                    </div>
+                    
 
             </form>
 
-            <!-- <form method="POST" action="" enctype="multipart/form-data" onsubmit="return prepare()" class="upload-photo"> -->
-
-                <!-- <div class="col-12 col-md-4" id="sketch"> -->
-
-                    <h5 class="mt-5">Draw mask here</h5>
-                    <canvas id="canvas" width="256" height="256" 
-                    style="float:left;border:8px solid; border-radius: 10px;
-                    "></canvas>
-                    <img id="uploaded_img" />
-
-                    <!-- <input type="submit" value="Done" /> -->
-                <!-- </div> -->
-            <!-- </form> -->
+            </div>
             {% else %}
                 <h5 class="mt-5">You are about to upload photos for
                     {% if pathname %}<em><b>{{pathname}}</b></em>{% endif %}. Your photos will be securely stored and kept
@@ -102,6 +107,7 @@
         //   console.log(img)
         //   return true;
         // }
+
       </script>
     
 </body>

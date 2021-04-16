@@ -4,6 +4,10 @@ var loadFile = function(event) {
 	output.onload = function() {
 		var image = new Image();
 		image.src = output.src;
+		document.getElementById('inpaint-mask').style.visibility = 'visible';
+		// document.getElementById('mask-title').style.visibility = 'visible';
+		document.getElementById('inpaint-uplaod').style.visibility = 'hidden';
+
 		var canvas = document.querySelector("#canvas");
 		var context = canvas.getContext("2d");
 		canvas.width = 256;
@@ -57,11 +61,26 @@ var loadFile = function(event) {
 			context.lineTo( Mouse.x, Mouse.y );
 			context.closePath();
 			context.stroke();
+
+			var img = canvas.toDataURL("image/png");
+			document.getElementById("payload").value = img;
+			console.log(img)
+			
 		};
 		URL.revokeObjectURL(output.src) // free memory
 		// document.getElementById('canvas').style.backgroundImage = output.src
+		
 		}
 };
+
+// downlaod function
+function download(){
+		var download = document.getElementById("download");
+		var image = document.getElementById("output_img").toDataURL("image/png")
+			    .replace("image/png", "image/octet-stream");
+		download.setAttribute("href", image);
+		// download.setAttribute("download","qrcode.png");
+}
 
 // (function()
 // {
