@@ -24,23 +24,22 @@ def uplaod_image(pathname) :
 def upload_files(pathname):
     uploaded_file = request.files['file']
     filename = uploaded_file.filename
-
-    image = request.form["payload"].split(',')[1]
-    # img = base64.b64decode(image)
-    img = Image.open(BytesIO(base64.b64decode(image)))
-    rgb_im = img.convert('RGB')
-    print("here",image)
     
     if filename != '':
         file_ext = os.path.splitext(filename)[1]
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] :
             abort(400)
         uploaded_file.save(os.path.join(app.config['UPLOAD_PATH'], filename))   #saving file to directory
+
         if pathname == 'inpaint' :
+            image = request.form["payload"].split(',')[1] 
+            img = Image.open(BytesIO(base64.b64decode(image)))
+            rgb_im = img.convert('RGB')
             rgb_im.save(os.path.join(app.config['UPLOAD_PATH'], 'masked_'+filename))   #saving file to directory
 
         return redirect(url_for('uploaded_file', pathname=pathname,filename= 'masked_'+filename if pathname == "inpaint" else filename))  #calling uploaded_file function
-
+    else :
+        return "<p>404 Not found image. Please upload image</p>"
 # showing images of this page from uploads directory
 @app.route('/uploads/<filename>')
 def send_file(filename):

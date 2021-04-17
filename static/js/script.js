@@ -70,17 +70,37 @@ var loadFile = function(event) {
 		URL.revokeObjectURL(output.src) // free memory
 		// document.getElementById('canvas').style.backgroundImage = output.src
 		
+
+		/* CLEAR BUTTON */
+		var clearButton = $( "#clear" );
+
+		clearButton.on( "click", function()
+		{
+
+			context.clearRect( 0, 0, 280, 280 );
+			context.drawImage(image, 0, 0,canvas.width,canvas.height);
+			
+
+		});
+
 		}
+
 };
 
 // downlaod function
 function download(){
-		var download = document.getElementById("download");
-		var image = document.getElementById("output_img").toDataURL("image/png")
-			    .replace("image/png", "image/octet-stream");
-		download.setAttribute("href", image);
-		// download.setAttribute("download","qrcode.png");
+		// var download = document.getElementById("download");
+		var image = document.getElementById("output_img");
+		var imageURL = URL.createObjectURL(image)
+		const link = document.createElement('a')
+		link.href = imageURL
+		link.download = 'Model_Output'
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
+
 }
+
 
 // (function()
 // {
