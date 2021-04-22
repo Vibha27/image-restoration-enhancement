@@ -31,9 +31,8 @@ html,body{
     max-width : 300px;
     top: 250px;
     padding: 5px;
-    background-color: rgb(104,119,150);
     border-radius: 10px;
-    color: white;
+    color: black;
     font-weight: bolder;
     display: flex;
     flex-direction: row;
@@ -41,6 +40,11 @@ html,body{
 .button-div {
     display: flex;
     flex-direction: column;
+}
+.apply-btn, .try-again-btn {
+
+    background-color: rgb(104,119,150);
+    color: white;
 }
 .output-image{
     object-fit: cover;

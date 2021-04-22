@@ -27,12 +27,10 @@
                 <div class="col-12 col-md-4">
                     <h4 class="mt-5">Your Image</h4>
                     <img src="{{ url_for('send_file', filename=filename) }}" class="img-fluid "/>
-                     <!-- If inpainting is selected then show canvas  -->
                      
                 </div>
                 <div class="col-12 col-md-4"> 
                     <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
-                    <a href="{{ url_for('static', filename='uploads/out_'+filename) }}" class="btn btn-block btn-success" download>Download</a>
 
                     <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
                     
@@ -40,6 +38,8 @@
                     
                 </div>
                 <div class="col-12 col-md-4">
+                    <a href="{{ url_for('static', filename='uploads/out_'+filename) }}" class="btn btn-block btn-success" download>Download</a>
+                    <button class="btn btn-block try-again-btn">Try Again</button>
                 </div>
             </div>
             {% elif pathname == 'inpaint' %}
@@ -54,18 +54,16 @@
                     onchange="loadFile(event)"
                     accept=".png,.jpeg,.jpg" />
                     <input type="hidden" id="payload" name="payload" value="x">
-                    <input type="submit" class="btn btn-small" value="Apply Model" />
+                    <!-- <input type="submit" class="btn btn-small" value="Apply Model" /> -->
                 </div>
-                <div class="row" id="inpaint-mask" style="visibility: hidden;">
 
-                    <div class="col-12 col-md-6 mr-5">
-                        <h5 class="mt-5">Your Original Image</h5>
-                        <img id="uploaded_img" />
-                    </div>
-                    <div >
+
+                <div class="row align-items-center justify-content-center" id="inpaint-mask" style="visibility: hidden;">
+
+                    <div>
                         <h5 class="mt-5" id="mask-title">Draw mask here</h5>
-                        <canvas id="canvas" width="256" height="256" 
-                        style="border:5px solid; border-radius: 5px; 
+                        <canvas id="canvas"
+                        style="border:4px solid; border-radius: 5px; 
                         ">
                         </canvas>
                         <div class="row">
@@ -77,6 +75,17 @@
 
             </form>
 
+                <!-- hidden -->
+                <div class="col-12 col-md-6 mr-5" style="visibility: hidden;">
+                    <h5 class="mt-5">Your Original Image</h5>
+                    <img id="uploaded_img" />
+                    
+                    <canvas id="hidden-canvas"
+                    style="border:4px solid; border-radius: 5px; 
+                    ">
+                    </canvas>
+                </div>
+                <!--  -->
             </div>
             {% else %}
                 <h5 class="mt-5">You are about to upload photos for
@@ -88,7 +97,7 @@
                     <div class="upload">
                         <input type="file" name="file" class="file" 
                         accept=".png,.jpeg,.jpg" />
-                        <input type="submit" class="btn btn-small" value="Apply Model" />
+                        <input type="submit" class="btn btn-small apply-btn" value="Apply Model" />
                     </div>
 
                 </form>

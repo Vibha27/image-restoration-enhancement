@@ -3,30 +3,39 @@ var loadFile = function(event) {
 	output.src = URL.createObjectURL(event.target.files[0]);
 	output.onload = function() {
 		var image = new Image();
-		image.src = output.src;
+		image.src = output.src
+
 		document.getElementById('inpaint-mask').style.visibility = 'visible';
 		// document.getElementById('mask-title').style.visibility = 'visible';
 		document.getElementById('inpaint-uplaod').style.visibility = 'hidden';
-
+		
 		var canvas = document.querySelector("#canvas");
+		var hidden_canvas = document.querySelector("#hidden-canvas");
 		var context = canvas.getContext("2d");
-		canvas.width = 256;
-		canvas.height = 256;
+		var context_hidden = hidden_canvas.getContext("2d");
+		canvas.width = image.width;
+		canvas.height = image.height;
+		hidden_canvas.width = image.width;
+		hidden_canvas.height = image.height;
 
 		var Mouse = { x: 0, y: 0 };
 		var lastMouse = { x: 0, y: 0 };
+		// visible canvas
 		context.fillStyle="white";
+		context_hidden.fillStyle="white";
 		context.fillRect(0,0,canvas.width,canvas.height);
+		context_hidden.fillRect(0,0,hidden_canvas.width,hidden_canvas.height);
 		context.drawImage(image, 0, 0,canvas.width,canvas.height);
 		context.color = "black";
 		context.lineWidth = 5;
+		context_hidden.lineWidth = 5;
 		context.lineJoin = context.lineCap = 'round';
+
 
 		//debug();
 
 		canvas.addEventListener( "mousemove", function( e )
 		{
-			console.log("hjj")
 			lastMouse.x = Mouse.x;
 			lastMouse.y = Mouse.y;
 
@@ -50,7 +59,6 @@ var loadFile = function(event) {
 		
 		var onPaint = function()
 		{
-			console.log("OnPaint")
 			context.lineWidth = context.lineWidth;
 			context.lineJoin = "round";
 			context.lineCap = "round";
@@ -62,7 +70,16 @@ var loadFile = function(event) {
 			context.closePath();
 			context.stroke();
 
-			var img = canvas.toDataURL("image/png");
+			context_hidden.beginPath();
+			context_hidden.moveTo( lastMouse.x, lastMouse.y );
+			context_hidden.lineTo( Mouse.x, Mouse.y );
+			context_hidden.closePath();
+			context_hidden.stroke();
+
+			// hidden canvas
+			// context_hidden.drawImage(canvas, 0, 0,canvas.width,canvas.height);
+
+			var img = hidden_canvas.toDataURL("image/png");
 			document.getElementById("payload").value = img;
 			console.log(img)
 			
@@ -77,9 +94,9 @@ var loadFile = function(event) {
 		clearButton.on( "click", function()
 		{
 
-			context.clearRect( 0, 0, 280, 280 );
+			context.clearRect( 0, 0,canvas.width,canvas.height );
 			context.drawImage(image, 0, 0,canvas.width,canvas.height);
-			
+			context_hidden.clearRect(0,0,canvas.width,canvas.height)
 
 		});
 

@@ -37,7 +37,7 @@ def upload_files(pathname):
             rgb_im = img.convert('RGB')
             rgb_im.save(os.path.join(app.config['UPLOAD_PATH'], 'masked_'+filename))   #saving file to directory
 
-        return redirect(url_for('uploaded_file', pathname=pathname,filename= 'masked_'+filename if pathname == "inpaint" else filename))  #calling uploaded_file function
+        return redirect(url_for('uploaded_file', pathname=pathname,filename= filename))  #calling uploaded_file function
     else :
         return "<p>404 Not found image. Please upload image</p>"
 # showing images of this page from uploads directory
