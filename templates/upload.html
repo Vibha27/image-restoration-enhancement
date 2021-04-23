@@ -23,23 +23,26 @@
         <div class="container">
 
             {% if filename %}
-            <div class="row justify-content-center align-items-center">
-                <div class="col-12 col-md-4">
-                    <h4 class="mt-5">Your Image</h4>
+            <div class="row mt-2 btn-row">
+                    <button class="btn btn-small try-again-btn m-1"
+                    onclick="window.history.back()">Try Again</button>
+                    <a href="{{ url_for('static', filename='uploads/out_'+filename) }}" 
+                    class="btn btn-small btn-success m-1" download>Download</a>
+                
+            </div>
+            <div class="row justify-content-center align-items-center mt-2">
+                <div class="col-12 col-md-6">
+                    <h4 >Your Image</h4>
                     <img src="{{ url_for('send_file', filename=filename) }}" class="img-fluid "/>
                      
                 </div>
-                <div class="col-12 col-md-4"> 
-                    <h4 class="mt-5 text-capitalize">{{pathname}} output</h4>
+                <div class="col-12 col-md-6">
+                    <h4 class="text-capitalize">{{pathname}} output</h4>
 
                     <img src="{{ url_for('static', filename='uploads/out_'+filename) }}" 
                     
                     class="img-fluid " id="output_img"/> 
                     
-                </div>
-                <div class="col-12 col-md-4">
-                    <a href="{{ url_for('static', filename='uploads/out_'+filename) }}" class="btn btn-block btn-success" download>Download</a>
-                    <button class="btn btn-block try-again-btn">Try Again</button>
                 </div>
             </div>
             {% elif pathname == 'inpaint' %}
@@ -68,7 +71,8 @@
                         </canvas>
                         <div class="row">
                             <input type="button" value="clear" class="btn btn-small" id="clear"/>
-                            <input type="submit" class="btn btn-small" style="float: right;" value="Apply Model" />
+                            <input type="button" class="btn btn-small" id="try" value="Try Again" />
+                            <input type="submit" class="btn btn-small" value="Apply Model" />
                         </div>
                     </div>
                 </div>    

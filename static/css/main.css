@@ -30,7 +30,7 @@ html,body{
     margin-right: auto;
     max-width : 300px;
     top: 250px;
-    padding: 5px;
+    padding: 2px;
     border-radius: 10px;
     color: black;
     font-weight: bolder;
@@ -45,6 +45,7 @@ html,body{
 
     background-color: rgb(104,119,150);
     color: white;
+    margin-left: 15px;
 }
 .output-image{
     object-fit: cover;

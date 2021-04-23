@@ -100,23 +100,39 @@ var loadFile = function(event) {
 
 		});
 
+		// try btn
+		var tryButton = $( "#try" );
+
+		tryButton.on( "click", function()
+		{
+
+			context.clearRect( 0, 0,canvas.width,canvas.height );
+			context.drawImage(image, 0, 0,canvas.width,canvas.height);
+			context_hidden.clearRect(0,0,canvas.width,canvas.height)
+
+			document.getElementById('inpaint-mask').style.visibility = 'hidden';
+			document.getElementById('inpaint-uplaod').style.visibility = 'visible';
+		
+
+		});
+
 		}
 
 };
 
-// downlaod function
-function download(){
-		// var download = document.getElementById("download");
-		var image = document.getElementById("output_img");
-		var imageURL = URL.createObjectURL(image)
-		const link = document.createElement('a')
-		link.href = imageURL
-		link.download = 'Model_Output'
-		document.body.appendChild(link)
-		link.click()
-		document.body.removeChild(link)
+// // downlaod function
+// function download(){
+// 		// var download = document.getElementById("download");
+// 		var image = document.getElementById("output_img");
+// 		var imageURL = URL.createObjectURL(image)
+// 		const link = document.createElement('a')
+// 		link.href = imageURL
+// 		link.download = 'Model_Output'
+// 		document.body.appendChild(link)
+// 		link.click()
+// 		document.body.removeChild(link)
 
-}
+// }
 
 
 // (function()
