@@ -41,6 +41,10 @@ html,body{
     display: flex;
     flex-direction: column;
 }
+#try, #clear {
+    background-color: blanchedalmond;
+    margin : 2px;
+}
 .apply-btn, .try-again-btn {
 
     background-color: rgb(104,119,150);

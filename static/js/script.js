@@ -30,28 +30,44 @@ var loadFile = function(event) {
 		context.lineWidth = 5;
 		context_hidden.lineWidth = 5;
 		context.lineJoin = context.lineCap = 'round';
-
-
+		drawline = false;
 		//debug();
 
+		const getClientOffset = (event) => {
+			const {pageX, pageY} = event.touches ? event.touches[0] : event;
+			const x = pageX - this.offsetLeft;
+			const y = pageY - this.offsetTop;
+		
+			return {
+			   x,
+			   y
+			} 
+		}
+		
 		canvas.addEventListener( "mousemove", function( e )
 		{
-			lastMouse.x = Mouse.x;
-			lastMouse.y = Mouse.y;
+			if (drawline === true) {
+				lastMouse.x = Mouse.x;
+				lastMouse.y = Mouse.y;
+	
+				Mouse.x = e.pageX - this.offsetLeft;
+				Mouse.y = e.pageY - this.offsetTop;
 
-			Mouse.x = e.pageX - this.offsetLeft;
-			Mouse.y = e.pageY - this.offsetTop;
-
+			}
 		}, false );
 
 		canvas.addEventListener( "mousedown", function( e )
 		{
+			drawline = true;
+			getClientOffset(event);
 			canvas.addEventListener( "mousemove", onPaint, false );
 
 		}, false );
 
 		canvas.addEventListener( "mouseup", function()
 		{
+			drawLine = false;
+			getClientOffset(event);
 			console.log("In mouseEvent")
 			canvas.removeEventListener( "mousemove", onPaint, false );
 
