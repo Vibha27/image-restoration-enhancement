@@ -19,6 +19,7 @@ var loadFile = function(event) {
 		hidden_canvas.height = image.height;
 
 		var Mouse = { x: 0, y: 0 };
+		var Mo = [];
 		var lastMouse = { x: 0, y: 0 };
 		// visible canvas
 		context.fillStyle="white";
@@ -44,32 +45,43 @@ var loadFile = function(event) {
 			} 
 		}
 		
-		canvas.addEventListener( "mousemove", function( e )
-		{
-			if (drawline === true) {
-				lastMouse.x = Mouse.x;
-				lastMouse.y = Mouse.y;
+		// canvas.addEventListener( "mousemove", function( e )
+		// {
+		// 	if (drawline === true) {
+		// 		lastMouse.x = Mouse.x;
+		// 		lastMouse.y = Mouse.y;
 	
-				Mouse.x = e.pageX - this.offsetLeft;
-				Mouse.y = e.pageY - this.offsetTop;
+		// 		Mouse.x = e.pageX - this.offsetLeft;
+		// 		Mouse.y = e.pageY - this.offsetTop;
 
-			}
-		}, false );
+		// 	}
+		// }, false );
 
 		canvas.addEventListener( "mousedown", function( e )
 		{
 			drawline = true;
 			getClientOffset(event);
-			canvas.addEventListener( "mousemove", onPaint, false );
-
+			Mouse.x = e.pageX - this.offsetLeft;
+			Mouse.y = e.pageY - this.offsetTop;
+			
+			Mo.push(Mouse.x);
+			Mo.push(Mouse.y);
+			// canvas.addEventListener( "mousemove", onPaint, false );
+			console.log("In Mouse down",Mouse.x,Mouse.y);
+			
 		}, false );
 
-		canvas.addEventListener( "mouseup", function()
+		canvas.addEventListener( "mouseup", function(e)
 		{
 			drawLine = false;
 			getClientOffset(event);
-			console.log("In mouseEvent")
-			canvas.removeEventListener( "mousemove", onPaint, false );
+			Mouse.x = e.pageX - this.offsetLeft;
+			Mouse.y = e.pageY - this.offsetTop;
+			Mo.push(Mouse.x);
+			Mo.push(Mouse.y);
+			console.log("In Mouse Up",Mouse.x,Mouse.y);
+			onPaint();
+			// canvas.removeEventListener( "mousemove", onPaint, false );
 
 		}, false );
 		
@@ -80,17 +92,32 @@ var loadFile = function(event) {
 			context.lineCap = "round";
 			context.strokeStyle = context.color;
 
-			context.beginPath();
-			context.moveTo( lastMouse.x, lastMouse.y );
-			context.lineTo( Mouse.x, Mouse.y );
-			context.closePath();
-			context.stroke();
+			// context.beginPath();
+			// context.moveTo( lastMouse.x, lastMouse.y );
+			// context.lineTo( Mouse.x, Mouse.y );
+			// context.closePath();
+			// context.stroke();
 
-			context_hidden.beginPath();
-			context_hidden.moveTo( lastMouse.x, lastMouse.y );
-			context_hidden.lineTo( Mouse.x, Mouse.y );
-			context_hidden.closePath();
-			context_hidden.stroke();
+			// context_hidden.beginPath();
+			// context_hidden.moveTo( lastMouse.x, lastMouse.y );
+			// context_hidden.lineTo( Mouse.x, Mouse.y );
+			// context_hidden.closePath();
+			// context_hidden.stroke();
+
+			for(let i=0; i<Mo.length; i+=4) {
+				context.beginPath();
+				context.moveTo( Mo[i], Mo[i+1] );
+				context.lineTo( Mo[i+2], Mo[i+3] );
+				context.closePath();
+				context.stroke();
+
+				context_hidden.beginPath();
+				context_hidden.moveTo( Mo[i], Mo[i+1] );
+				context_hidden.lineTo( Mo[i+2], Mo[i+3] );
+				context_hidden.closePath();
+				context_hidden.stroke();
+
+			}
 
 			// hidden canvas
 			// context_hidden.drawImage(canvas, 0, 0,canvas.width,canvas.height);
@@ -110,6 +137,8 @@ var loadFile = function(event) {
 		clearButton.on( "click", function()
 		{
 
+			Mouse = { x: 0, y: 0 }
+			Mo = []
 			context.clearRect( 0, 0,canvas.width,canvas.height );
 			context.drawImage(image, 0, 0,canvas.width,canvas.height);
 			context_hidden.clearRect(0,0,canvas.width,canvas.height)
